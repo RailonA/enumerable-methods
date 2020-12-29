@@ -61,6 +61,37 @@ module Enumerable
       true
     end
       
+    # my_count
+    def my_count
+      item = nil
+      count = 0
+        if item 
+          self.my_each {|elem| count += 1 if elem == item}
+        elsif block_given?
+          self.my_each {|elem| count += 1 if yield(elem)}
+        else
+          count = self.length
+        end 
+      count
+    end
+
+    #  my_map
+    def my_map
+       block = nil
+       new_array = Array.new
+       if block
+        self.my_each_width_index do
+          |elem, index| new_array[index] = block.call(elem) 
+        end
+      else  self.my_each_width_index do 
+        |elem, index| new_array[index] = yield(elem)
+      end
+    end
+    new_array
+    end
+
+
+    #  my_inject
   
 end
   
@@ -96,6 +127,20 @@ end
 # print test_arr.none? {|item| item.is_a? Integer}
 # print test_arr.my_none? {|item| item.is_a? String}
 # print test_arr.my_none? {|item| item.is_a? Integer}
+
+# count
+# print test_arr.count {|item| item < 4}
+# print test_arr.count(5)
+# print test_arr.count
+# print test_arr.my_count {|item| item < 4}
+# print test_arr.my_count(5) 
+# print test_arr.my_count
+  
+# map
+# print test_arr.map {|item| item * 10 }
+# print test_arr.map(&test_block)
+# print test_arr.my_map {|item| item * 10 }
+# print test_arr.my_map(&test_block)
 
 
  
