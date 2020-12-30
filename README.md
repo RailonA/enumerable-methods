@@ -10,8 +10,7 @@
 ## GETTING STARTED
 
 - clone the repository `$ git clone git@github.com:RailonA/enumerable-methods.git`
-- go to the project directory `$ cd bubble_sort`
-- Run the command `$ ruby bubble_sort.rb`
+- Run the command `$ ruby enumerable.rb`
 
 ## Built With
 
