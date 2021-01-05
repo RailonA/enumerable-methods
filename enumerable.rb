@@ -38,16 +38,6 @@ module Enumerable
     end
     end
     self
-
-
-    # if is_a?(Array)
-    #   index = 0
-    #   while index < size
-    #   yield(self[index], index)
-    # end
-    # index += 1
-  
-
   end
 
   #3. my_select
@@ -143,9 +133,7 @@ HIGHEST_VALUE = 9
 array = Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) }
 block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
 words = %w[dog door rod blade]
-
 range = Range.new(5, 50)
-
 hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
 numbers = [1, 2i, 3.14]
 array_clone = array.clone
@@ -157,11 +145,11 @@ array_clone = array.clone
 
 # 2. each_with_index
   # range.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
-  range.my_each_width_index {|item,i| puts "Index: #{i} Item: #{item}"}
+  # range.my_each_width_index {|item,i| puts "Index: #{i} Item: #{item}"}
 
 # 3. select
-# print test_array.select {|item| item.even? }
-# print test_array.my_select {|item| item.even? }
+  print array_clone.select {|item| item.even? }
+  print array_clone.my_select {|item| item.even? }
 
 # 4. all?
 # print test_array.all? {|item| item.is_a? Integer}
