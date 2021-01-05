@@ -42,6 +42,7 @@ module Enumerable
 
   #3. my_select
   def my_select
+    return to_enum unless block_given?
     new_array = []
     my_each do |item|
       new_array.push(item) if yield(item)
@@ -51,8 +52,7 @@ module Enumerable
 
   #4. my_all?
   def my_all?
-    return false if empty?
-
+    return false if nil?
     my_each do |item|
       return false unless yield(item)
     end
@@ -148,14 +148,14 @@ array_clone = array.clone
   # range.my_each_width_index {|item,i| puts "Index: #{i} Item: #{item}"}
 
 # 3. select
-  print array_clone.select {|item| item.even? }
-  print array_clone.my_select {|item| item.even? }
+  # print array_clone.select {|item| item.even? }
+  # print array_clone.my_select {|item| item.even? }
 
 # 4. all?
-# print test_array.all? {|item| item.is_a? Integer}
-# print test_array.all? {|num| item.is_a? String}
-# print test_array.my_all? {|item| item.is_a? Integer}
-# print test_array.my_all? {|item| item.is_a? String}
+puts range.all? {|item| item.is_a? Integer}
+puts range.all? {|item| item.is_a? String}
+puts range.my_all? {|item| item.is_a? Integer}
+puts range.my_all? {|item| item.is_a? String}
 
 # 5. any?
 # print test_array.any? {|item| item.is_a? Integer}
