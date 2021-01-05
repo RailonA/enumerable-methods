@@ -52,6 +52,7 @@ module Enumerable
 
   #4. my_all?
   def my_all?
+    return to_enum unless block_given?
     return false if nil?
     my_each do |item|
       return false unless yield(item)
@@ -60,13 +61,17 @@ module Enumerable
   end
 
   #5. my_any?
-  def my_any?
-    return false if empty?
+  def my_any?(param = nil)
+    return my_any? { |obj| obj } unless block_given? || !param.nil?
 
     my_each do |item|
-      return false unless yield(item)
+      return true if param.is_a?(Class) && item.is_a?(param)
+      return true if param.instance_of?(Regexp) && item.to_s.match(param.to_s)
+      return true if block_given? && yield(item)
+      return true if param.is_a?(Integer) && param == item
+      return true if param.is_a?(String) && param == item
     end
-    true
+    false
   end
 
   #6. my_none?
@@ -152,20 +157,20 @@ array_clone = array.clone
   # print array_clone.my_select {|item| item.even? }
 
 # 4. all?
-puts range.all? {|item| item.is_a? Integer}
-puts range.all? {|item| item.is_a? String}
-puts range.my_all? {|item| item.is_a? Integer}
-puts range.my_all? {|item| item.is_a? String}
+# puts range.all? {|item| item.is_a? Integer}
+# puts range.all? {|item| item.is_a? String}
+# puts range.my_all? {|item| item.is_a? Integer}
+# puts range.my_all? {|item| item.is_a? String}
 
 # 5. any?
-# print test_array.any? {|item| item.is_a? Integer}
-# print test_array.any? {|item| item.is_a? String}
-# print test_array.my_any? {|item| item.is_a? Integer}
-# print test_array.my_any? {|item| item.is_a? String}
+# puts range.any? {|item| item.is_a? Integer}
+# puts range.any? {|item| item.is_a? String}
+# puts range.my_any? {|item| item.is_a? Integer}
+# puts range.my_any? {|item| item.is_a? String}
 
 # 6. none?
-# print test_array.none? {|item| item.is_a? String}
-# print test_array.none? {|item| item.is_a? Integer}
+print test_array.none? {|item| item.is_a? String}
+print test_array.none? {|item| item.is_a? Integer}
 # print test_array.my_none? {|item| item.is_a? String}
 # print test_array.my_none? {|item| item.is_a? Integer}
 
