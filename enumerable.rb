@@ -89,18 +89,21 @@ module Enumerable
   end
 
   #7. my_count
-  def my_count
-    item = nil
-    count = 0
-    if item
-      my_each { |elem| count += 1 if elem == item }
-    elsif block_given?
-      my_each { |elem| count += 1 if yield(elem) }
+  def my_count(param = nil)
+    counter = 0
+    return to_a.length if !block_given? && param.nil?
+    if block_given?
+      my_each { |item| counter += 1 if yield(item) }
     else
-      count = length
+      my_each { |item| counter += 1 if param == item }
     end
-    count
+    counter
   end
+  
+  
+
+ 
+
 
   #8.  my_map
   def my_map
@@ -173,18 +176,18 @@ array_clone = array.clone
 # puts range.my_any? {|item| item.is_a? String}
 
 # 6. none?
-puts numbers.none? {|item| item.is_a? String}
-puts numbers.none? {|item| item.is_a? Integer}
-puts numbers.my_none? {|item| item.is_a? String}
-puts numbers.my_none? {|item| item.is_a? Integer}
+# puts numbers.none? {|item| item.is_a? String}
+# puts numbers.none? {|item| item.is_a? Integer}
+# puts numbers.my_none? {|item| item.is_a? String}
+# puts numbers.my_none? {|item| item.is_a? Integer}
 
 # 7. count
-# print test_array.count {|item| item < 4}
-# print test_array.count(5)
-# print test_array.count
-# print test_array.my_count {|item| item < 4}
-# print test_array.my_count(5)
-# print test_array.my_count
+ puts array_clone.count {|item| item < 4}
+ puts array_clone.count(5)
+ puts array_clone.count
+ puts array_clone.my_count {|item| item < 4}
+ puts array_clone.my_count(5)
+ puts array_clone.my_count
 
 # 8. map# def my_each
 #   return to_enum(:my_each) unless block_given?
