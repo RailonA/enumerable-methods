@@ -1,8 +1,5 @@
 module Enumerable
   #1. each
-
-  
-      # self(index, index)
       def my_each
         return to_enum(:my_each) unless block_given?
     
@@ -19,14 +16,38 @@ module Enumerable
            yield(keys.zip(values))
       end
     end
-    end
+    
 
   #2. my_each_width_index
   def my_each_width_index
-    self_length = length
-    self_length.times do |index|
-      yield(self[index], index)
+    return to_enum(:my_each) unless block_given?
+    index = 0
+    while index < size 
+    if is_a?(Array)
+        yield(self[index], index)
+        index += 1
+    elsif is_a?(Range)
+        yield(to_a[index], index)
+        index += 1
+    elsif is_a?(Hash)
+      value = 0
+      while value < size
+        yield([keys[value], values[value]])
+        value += 1
+      end
     end
+    end
+    self
+
+
+    # if is_a?(Array)
+    #   index = 0
+    #   while index < size
+    #   yield(self[index], index)
+    # end
+    # index += 1
+  
+
   end
 
   #3. my_select
@@ -107,6 +128,7 @@ module Enumerable
     result
    end
 
+  end
 
 #10. multiply_els
 def multiply_els(array)
@@ -118,29 +140,24 @@ end
 ARRAY_SIZE = 100
 LOWEST_VALUE = 0
 HIGHEST_VALUE = 9
-# passes
 array = Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) }
-# failed
 block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
-# passed
 words = %w[dog door rod blade]
-#  passed
+
 range = Range.new(5, 50)
-#  failed
+
 hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-# passed
 numbers = [1, 2i, 3.14]
-# passed
 array_clone = array.clone
 
 
 # 1. each
     #  hash.each {|item| print item}
-    array_clone.my_each {|item| print item}
+    # array_clone.my_each {|item| print item}
 
 # 2. each_with_index
-# test_array.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
-# test_array.my_each_width_index {|item,i| puts "Index: #{i} Item: #{item}"}
+  # range.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
+  range.my_each_width_index {|item,i| puts "Index: #{i} Item: #{item}"}
 
 # 3. select
 # print test_array.select {|item| item.even? }
