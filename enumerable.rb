@@ -75,11 +75,15 @@ module Enumerable
   end
 
   #6. my_none?
-  def my_none?
-    return false if empty?
+  def my_none?(param = nil)
+    return my_none? { |obj| obj } unless block_given? || !param.nil?
 
     my_each do |item|
-      return false if yield(item)
+      return false if param.is_a?(Class) && item.is_a?(param)
+      return false if param.instance_of?(Regexp) && item.to_s.match(param.to_s)
+      return false if block_given? && yield(item)
+      return false if param.is_a?(Integer) && param == item
+      return false if param.is_a?(String) && param == item
     end
     true
   end
@@ -169,10 +173,10 @@ array_clone = array.clone
 # puts range.my_any? {|item| item.is_a? String}
 
 # 6. none?
-print test_array.none? {|item| item.is_a? String}
-print test_array.none? {|item| item.is_a? Integer}
-# print test_array.my_none? {|item| item.is_a? String}
-# print test_array.my_none? {|item| item.is_a? Integer}
+puts numbers.none? {|item| item.is_a? String}
+puts numbers.none? {|item| item.is_a? Integer}
+puts numbers.my_none? {|item| item.is_a? String}
+puts numbers.my_none? {|item| item.is_a? Integer}
 
 # 7. count
 # print test_array.count {|item| item < 4}
