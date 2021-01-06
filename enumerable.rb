@@ -182,27 +182,19 @@ array_clone = array.clone
 # puts numbers.my_none? {|item| item.is_a? Integer}
 
 # 7. count
- puts array_clone.count {|item| item < 4}
- puts array_clone.count(5)
- puts array_clone.count
- puts array_clone.my_count {|item| item < 4}
- puts array_clone.my_count(5)
- puts array_clone.my_count
+#  puts array_clone.count {|item| item < 4}
+#  puts array_clone.count(5)
+#  puts array_clone.count
+#  puts array_clone.my_count {|item| item < 4}
+#  puts array_clone.my_count(5)
+#  puts array_clone.my_count
 
-# 8. map# def my_each
-#   return to_enum(:my_each) unless block_given?
-#   array_item = 0
-#   self_length = self.length
-#   while array_item < self_length
-#     yield(self[array_item])                         if self.is_a?(Array)
-#     yield(keys[array_item], self[keys[array_item]]) if self.is_a?(Hash)
-#     yield([to_a[array_item]])                       if self.is_a?(Range)
-#    array_item += 1
-#   end
-#   puts self
-# end
-
-# end
+#8. map
+# test_block = Proc.new {|elem| elem * 2}
+# print test_array.map {|item| item * 2 }
+# print test_array.map(&test_block)
+# print test_array.my_map {|item| item * 2 }
+# print test_array.my_map(&test_block)
 
 # test_block = Proc.new {|elem| elem * 2}
 # print test_array.map {|item| item * 2 }
