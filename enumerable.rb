@@ -102,35 +102,34 @@ module Enumerable
   
   
 
- 
 
-
-  #8.  my_map
+  # #8.  my_map
   def my_map
-    block = nil
     new_array = []
-    if block
-      my_each_width_index do |elem, index|
-        new_array[index] = block.call(elem)
-      end
-    else my_each_width_index do |elem, index|
-           new_array[index] = yield(elem)
-         end
-    end
-    new_array
+    return self.to_enum unless block_given?
+      self.my_each {|index| new_array << yield(index)}
+      new_array
   end
+
+
 
   #9. inject
-  def my_inject
-    result = self[0]
-    my_each_width_index do |item, index|
-      next if inde          index += 1
-      endld(result, item)
-     end
-    result
-   end
+  def my_inject(item = nil)
+    next_num = self.to_enum
+    sum = item == nil ? next_num.next : item
 
-  end
+    if block_given?
+      loop do
+        sum = yield(sum, next_num.next)
+      end
+    else
+      raise LocalJumpError.new("no block given")
+    end
+    sum
+  end 
+
+end
+
 
 #10. multiply_els
 def multiply_els(array)
@@ -191,24 +190,15 @@ array_clone = array.clone
 
 #8. map
 # test_block = Proc.new {|elem| elem * 2}
-# print test_array.map {|item| item * 2 }
+#  print hash.map {|item| item * 2 }
 # print test_array.map(&test_block)
-# print test_array.my_map {|item| item * 2 }
+#  print hash.my_map {|item| item * 2 }
 # print test_array.my_map(&test_block)
 
-# test_block = Proc.new {|elem| elem * 2}
-# print test_array.map {|item| item * 2 }
-# print test_array.map(&test_block)
-# print test_array.my_map {|item| item * 2 }
-# print test_array.my_map(&test_block)
 
 # 9. inject
-# print test_array.inject {|result,elem| result + elem}
-# print test_array.my_inject {|result,elem| result + elem}
+# puts hash.inject {|result,elem| result + elem}
+# puts hash.my_inject {|result,elem| result + elem}
 
 # 10.  multiply_els
-# def multiply_els(array)
-#   puts array.inject {|result,elem| result*elem }
-#   puts array.my_inject {|result,elem| result*elem }
-# end
-#  print multiply_els(test_array)
+  # puts multiply_els((5..10))
