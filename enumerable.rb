@@ -19,10 +19,12 @@ module Enumerable
   #2. my_each_widh_index
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
-    index = 0
     if is_a?(Array)
-        yield(self[index], index)
-        index += 1
+        index = 0
+        while index < self.size
+          yield(self[index], index)
+          index += 1
+        end
     elsif is_a?(Range)
         yield(to_a[index], index)
         index += 1
@@ -131,7 +133,7 @@ array_clone = array.clone
 
 # 2. each_with_index
 # range.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
- hash.my_each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
+ array.my_each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
 
 # 3. select
 # print array_clone.select {|item| item.even? }
