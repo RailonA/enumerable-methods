@@ -101,8 +101,8 @@ module Enumerable
       loop do
         sum = yield(sum, next_num.next)
       end
-    else
-      raise LocalJumpError, 'no block given'
+      # else
+      #   raise LocalJumpError, 'no block given'
     end
     sum
   end
@@ -126,8 +126,8 @@ end
 # array_clone = array.clone
 
 # 1. each
-#  hash.each {|item| print item}
-# array_clone.my_each {|item| print item}
+# hash.each {|item| print item}
+#  hash.my_each {|item| print item}
 
 # 2. each_with_index
 # range.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
@@ -172,7 +172,7 @@ end
 
 # 9. inject
 # puts hash.inject {|result,elem| result + elem}
-# puts hash.my_inject {|result,elem| result + elem}
+# puts array.my_inject { |result, elem| result + elem }
 
 # 10.  multiply_els
 # puts multiply_els((5..10))
