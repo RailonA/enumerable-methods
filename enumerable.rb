@@ -30,7 +30,6 @@ module Enumerable
     end
     if is_a?(Hash)
       value = 0
-
       while value < size
         yield([keys[value], values[value]])
         value += 1
