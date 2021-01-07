@@ -15,31 +15,32 @@ module Enumerable
     yield(keys.zip(values)) if is_a?(Hash)
   end
 
-  # 2. my_each_with_index
-  #2. my_each_widh_index
+  # 2. my_each_widh_index
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
+
     if is_a?(Array)
-        index = 0
-        while index < self.size
-          yield(self[index], index)
-          index += 1
-        end
+      index = 0
+      while index < size
+        yield(self[index], index)
+        index += 1
+      end
     elsif is_a?(Range)
+      index = 0
+      while index < size
         yield(to_a[index], index)
         index += 1
+      end
     elsif is_a?(Hash)
       value = 0
-      while value < self.size
+      while value < size
         yield([keys[value], values[value]])
         value += 1
       end
-    
     end
     self
   end
 
-  
   # 3. my_select
   def my_select
     return to_enum unless block_given?
@@ -133,11 +134,11 @@ array_clone = array.clone
 
 # 2. each_with_index
 # range.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
- array.my_each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
+# hash.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" }
 
 # 3. select
-# print array_clone.select {|item| item.even? }
-# print array_clone.my_select {|item| item.even? }
+#  print array.select {|item| item.even? }
+# print words.my_select {|item| item.even? }
 
 # 4. all?
 # puts range.all? {|item| item.is_a? Integer}
