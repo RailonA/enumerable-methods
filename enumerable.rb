@@ -15,8 +15,8 @@ module Enumerable
     yield(keys.zip(values)) if is_a?(Hash)
   end
 
-  # 2. my_each_width_index
-  def my_each_width_index
+  # 2. my_each_with_index
+  def my_each_with_index
     return to_enum(:my_each) unless block_given?
 
     index = 0
@@ -131,7 +131,7 @@ end
 
 # 2. each_with_index
 # range.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
-# range.my_each_width_index {|item,i| puts "Index: #{i} Item: #{item}"}
+# range.my_each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
 
 # 3. select
 # print array_clone.select {|item| item.even? }
