@@ -20,18 +20,16 @@ module Enumerable
     return to_enum(:my_each) unless block_given?
 
     index = 0
-    while index <= size
+    value = 0
+    while index < size
       if is_a?(Array)
         yield(self[index], index)
       elsif is_a?(Range)
         yield(to_a[index], index)
       end
       index += 1
-    end
-    if is_a?(Hash)
-      value = 0
       while value < size
-        yield([keys[value], values[value]])
+        yield([keys[value], values[value]]) if is_a?(Hash)
         value += 1
       end
     end
@@ -131,7 +129,7 @@ end
 
 # 2. each_with_index
 #  array.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
-# array.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" }
+# hash.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" }
 
 # 3. select
 #  print array.select {|item| item.even? }
