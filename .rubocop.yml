@@ -48,3 +48,11 @@ Style/HashTransformKeys:
   Enabled: false
 Style/HashTransformValues:
   Enabled: false
+
+  # Disable method perceived complexity (how it is hard to read a method)
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+# Disable cyclomatic complexity which is a number of paths through a method
+Metrics/CyclomaticComplexity:
+  Enabled: false

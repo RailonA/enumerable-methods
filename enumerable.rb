@@ -129,7 +129,7 @@ end
 
 # 2. each_with_index
 #  array.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
-# hash.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" }
+#  range.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" }
 
 # 3. select
 #  print array.select {|item| item.even? }
