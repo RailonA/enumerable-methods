@@ -16,28 +16,28 @@ module Enumerable
   end
 
   # 2. my_each_with_index
+  #2. my_each_widh_index
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
-
     index = 0
-    while index < size
-      if is_a?(Array)
+    if is_a?(Array)
         yield(self[index], index)
         index += 1
-      elsif is_a?(Range)
+    elsif is_a?(Range)
         yield(to_a[index], index)
         index += 1
-      elsif is_a?(Hash)
-        value = 0
-        while value < size
-          yield([keys[value], values[value]])
-          value += 1
-        end
+    elsif is_a?(Hash)
+      value = 0
+      while value < self.size
+        yield([keys[value], values[value]])
+        value += 1
       end
+    
     end
     self
   end
 
+  
   # 3. my_select
   def my_select
     return to_enum unless block_given?
@@ -114,24 +114,24 @@ def multiply_els(array)
 end
 
 # The Test array that I use to test the methods below
-# ARRAY_SIZE = 100
-# LOWEST_VALUE = 0
-# HIGHEST_VALUE = 9
-# array = Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) }
-# block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
-# words = %w[dog door rod blade]
-# range = Range.new(5, 50)
-# hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-# numbers = [1, 2i, 3.14]
-# array_clone = array.clone
+ARRAY_SIZE = 100
+LOWEST_VALUE = 0
+HIGHEST_VALUE = 9
+array = Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) }
+block = proc { |num| num < (LOWEST_VALUE + HIGHEST_VALUE) / 2 }
+words = %w[dog door rod blade]
+range = Range.new(5, 50)
+hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+numbers = [1, 2i, 3.14]
+array_clone = array.clone
 
 # 1. each
 # hash.each {|item| print item}
-#  hash.my_each {|item| print item}
+# words.my_each {|item| print item}
 
 # 2. each_with_index
 # range.each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
-# range.my_each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
+ hash.my_each_with_index {|item,i| puts "Index: #{i} Item: #{item}"}
 
 # 3. select
 # print array_clone.select {|item| item.even? }
