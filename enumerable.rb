@@ -6,8 +6,9 @@ module Enumerable
     size.times do |i|
       yield to_a[i]
     end
-       self
+    self
   end
+
   # 2. my_each_with_index
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
@@ -58,18 +59,17 @@ module Enumerable
 
   #  6. My_none
   def my_none?(arg = nil)
-    if block_given? && !arg.nil?
-      return true if my_none?(arg) && my_none?
-    end
+    return true if block_given? && !arg.nil? && my_none?(arg) && my_none?
+
     if block_given?
       my_each { |item| return false if yield(item) }
     elsif arg.nil?
       my_each { |item| return false if item }
-    elsif arg.class == Class
+    elsif arg.instance_of?(Class)
       my_each do |item|
         return false if item.class <= arg
       end
-    elsif arg.class == Regexp
+    elsif arg.instance_of?(Regexp)
       my_each { |item| return false if item =~ arg }
     else
       my_each { |item| return false if item == arg && item.class <= arg.class }
@@ -117,4 +117,3 @@ end
 def multiply_els(array)
   array.my_inject { |product, elem| product * elem }
 end
-
