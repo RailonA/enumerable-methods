@@ -13,81 +13,130 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
 
-    index = 0
-    value = 0
-    while index < size
-      if is_a?(Array)
-        yield(self[index], index)
-      elsif is_a?(Range)
-        yield(to_a[index], index)
-      end
-      index += 1
-      while value < size
-        yield(keys[value], values[value]) if is_a?(Hash)
-        value += 1
-      end
+    size.times do |i|
+      yield to_a[i], i
     end
     self
   end
 
   # 3. my_select
   def my_select
-    return to_enum unless block_given?
+    return to_enum :my_select unless block_given?
 
-    new_array = []
-    my_each do |item|
-      new_array.push(item) if yield(item)
+    return_arr = []
+    return_hash = {}
+    if is_a?(Hash)
+      my_each do |key, val|
+        return_hash[key] = val if yield(key, val)
+      end
+      return_hash
+    else
+      my_each do |val|
+        return_arr.push(val) if yield(val)
+      end
+      return_arr
     end
-    new_array
   end
 
   # 4. my_all?
-  def my_all?
-    return to_enum unless block_given?
-    return false if nil?
-
-    my_each do |item|
-      return false unless yield(item)
+  def my_all?(arg = nil)
+    if arg.nil?
+      if block_given?
+        my_each do |item|
+          return false unless yield(item)
+        end
+      else
+        my_each do |item|
+          return false unless item
+        end
+      end
+    elsif arg.is_a?(Regexp)
+      my_each do |item|
+        return false unless item.match(arg)
+      end
+    elsif arg.is_a?(Module)
+      my_each do |item|
+        return false unless item.is_a?(arg)
+      end
+    else
+      my_each do |item|
+        return false unless item == arg
+      end
     end
     true
   end
 
   #  5. my_any?
-  def my_any?(&block)
-    my_select(&block).length.positive?
+  def my_any?(arg = nil)
+    if arg.nil?
+      if block_given?
+        my_each do |item|
+          return true if yield(item)
+        end
+      else
+        my_each do |item|
+          return true if item
+        end
+      end
+    elsif arg.is_a?(Regexp)
+      my_each do |item|
+        return true if item.match(arg)
+      end
+    elsif arg.is_a?(Module)
+      my_each do |item|
+        return true if item.is_a?(arg)
+      end
+    else
+      my_each do |item|
+        return true if item == arg
+      end
+    end
+    false
   end
 
   #  6. My_none
   def my_none?(arg = nil)
-    return true if block_given? && !arg.nil? && my_none?(arg) && my_none?
-
-    if block_given?
-      my_each { |item| return false if yield(item) }
-    elsif arg.nil?
-      my_each { |item| return false if item }
-    elsif arg.instance_of?(Class)
-      my_each do |item|
-        return false if item.class <= arg
+    if arg.nil?
+      if block_given?
+        my_each do |item|
+          return true if yield(item)
+        end
+      else
+        my_each do |item|
+          return true if item
+        end
       end
-    elsif arg.instance_of?(Regexp)
-      my_each { |item| return false if item =~ arg }
+    elsif arg.is_a?(Regexp)
+      my_each do |item|
+        return true if item.match(arg)
+      end
+    elsif arg.is_a?(Module)
+      my_each do |item|
+        return true if item.is_a?(arg)
+      end
     else
-      my_each { |item| return false if item == arg && item.class <= arg.class }
+      my_each do |item|
+        return true if item == arg
+      end
     end
     true
   end
 
   # 7. my_count
-  def my_count(param = nil)
-    counter = 0
-    return to_a.length if !block_given? && param.nil?
-
+  def my_count(arg = nil)
+    ans = 0
     if block_given?
-      my_each { |item| counter += 1 if yield(item) }
+      my_each do |item|
+        ans += 1 if yield(item)
+      end
+    elsif arg.nil?
+      ans = size
     else
-      my_each { |item| counter += 1 if param == item }
+      my_each do |item|
+        ans += 1 if item == arg
+      end
     end
-    counter
+    ans
   end
 
   # #8.  my_map
@@ -100,20 +149,25 @@ module Enumerable
   end
 
   # 9. inject
-  def my_inject(item = nil)
-    next_num = to_enum
-    sum = item.nil? ? next_num.next : item
+  def my_inject(*arg)
+    raise LocalJumpError unless block_given? || !arg.empty?
 
+    sym = arg.pop unless block_given?
+    my_array = arg + to_a
+    memo = my_array.shift
     if block_given?
-      loop do
-        sum = yield(sum, next_num.next)
-      end
+      my_array.my_each { |item| memo = yield(memo, item) }
+    else
+      my_array.my_each { |item| memo = memo.send(sym, item) }
     end
-    sum
+    memo
   end
+
+
 end
 
 # 10. multiply_els
 def multiply_els(array)
   array.my_inject { |product, elem| product * elem }
 end
+

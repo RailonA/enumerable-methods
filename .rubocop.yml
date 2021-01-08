@@ -60,3 +60,8 @@ Metrics/PerceivedComplexity:
 # Disable cyclomatic complexity which is a number of paths through a method
 Metrics/CyclomaticComplexity:
   Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false

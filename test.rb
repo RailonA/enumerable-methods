@@ -1,163 +1,114 @@
-require_relative 'enumerable'
+require_relative 'enumerable.rb'
 
-ARRAY_SIZE = 100
-LOWEST_VALUE = 0
-HIGHEST_VALUE = 9
-array = [1, 2, 3, 4, 5]
-words = %w[dog door rod blade]
-range = Range.new(5, 50)
-hash = { a: 1, b: 2, c: 3, d: 4, e: 5 }
-numbers = [1, 2i, 3.14]
-array_clone = array.clone
+my_array = [1, 2, 3, 4, 5]
+my_hash = { x: 1, y: 2, z: 3 }
+my_text = %w[ant bear cat]
+arg = proc { |value| value * 2 }
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************      THIS IS METHOD: my_each       **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
+puts '==========================this is my each method'
+p my_array.my_each
+p(my_hash.my_each { |value| p value })
+p((1..10).my_each { |value| p value })
+# puts '==========================this is  each method'
+# p my_array.each
+# p my_hash.each { |value| p value }
+# p (1..10).each { |value| p value }
 
-puts '**************** array.my_each *******************'
-p(array.my_each { |item| p item })
-puts '**************** words.my_each *******************'
-p(words.my_each { |item| p item })
-puts '**************** hash.my_each *******************'
-p(hash.my_each { |item| p item })
-puts '**************** numbers.my_each *******************'
-p(numbers.my_each { |item| p item })
-puts '**************** array_clone.my_each *******************'
-p(array_clone.my_each { |item| p item })
+puts '==========================this is my_each_with_index method'
+p(my_array.my_each_with_index { |value, i| puts value, i })
+p(my_hash.my_each_with_index { |value, i| p value, i })
+p((1..10).my_each_with_index { |value, i| p value, i })
+# puts '==========================this is each_with_index method'
+# p my_array.each_with_index { |value, i| puts value, i }
+# p my_hash.each_with_index { |value, i| p value, i }
+# p (1..10).each_with_index { |value, i| p value, i }
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_each_with_index **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_each_with_index *******************'
-p(array.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" })
-puts '**************** words.my_each_with_index *******************'
-p(words.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" })
-puts '**************** hash.my_each_with_index *******************'
-p(hash.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" })
-puts '**************** numbers.my_each_with_index *******************'
-p(numbers.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" })
-puts '**************** array_clone.my_each_with_index *******************'
-p(array_clone.my_each_with_index { |item, i| puts "Index: #{i} Item: #{item}" })
+puts '==========================this is my_select method'
+p(my_array.my_select { |value| value > 3 })
+p(my_hash.my_select { |_key, value| value > 1 })
+p((1..10).my_select { |value| value > 6 })
+# puts '==========================this is select method'
+# p my_array.select { |value| value > 3 }
+# p my_hash.select { |_key, value| value > 1 }
+# p(1..10).select { |value| value > 6 }
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_select **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_select *******************'
-p array.my_select(&:even?)
-puts '**************** range.my_select *******************'
-p range.my_select(&:even?)
-puts '**************** array_clone.my_select *******************'
-p array_clone.my_select(&:even?)
+puts '==========================this is my_all? method'
+p(my_text.my_all?(/t/))
+p(my_array.my_all?(Numeric))
+p(my_array.my_all?)
+p(my_array.my_all? { |value| value >= 2 })
+p(my_text.my_all?(/t/) { |value| value >= 2 })
+# puts '==========================this is all? method'
+# p my_text.my_all?(/t/)
+# p my_array.my_all?(Numeric)
+# p my_array.my_all?
+# p my_array.my_all? { |value| value >= 2 }
+# p my_text.my_all?(/t/) { |value| value >= 2 }
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_all **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_all (Integer/String) *******************'
-p(array.my_all? { |item| item.is_a? Integer })
-p(array.my_all? { |item| item.is_a? String })
-p array.my_all?
-puts '**************** range.my_all  (Integer/String) *******************'
-p(range.my_all? { |item| item.is_a? Integer })
-p(range.my_all? { |item| item.is_a? String })
-p range.my_all?
-puts '**************** array_clone.my_all  (Integer/String) *******************'
-p(array_clone.my_all? { |item| item.is_a? Integer })
-p(array_clone.my_all? { |item| item.is_a? String })
-p array_clone.my_all?
-puts '**************** words.my_all  (Integer/String) *******************'
-p(words.my_all? { |item| item.is_a? Integer })
-p(words.my_all? { |item| item.is_a? String })
-p words.my_all?
+puts '==========================this is my_any method'
+p(my_text.my_any?(/t/))
+p(my_array.my_any?(Numeric))
+p(my_array.my_any?)
+p(my_array.my_any? { |value| value > 10 })
+p(my_text.my_any?(/t/) { |value| value >= 2 })
+# puts '==========================this is any method'
+# p my_text.any?(/t/)
+# p my_array.any?(Numeric)
+# p my_array.any?
+# p my_array.any? { |value| value > 10 }
+# p my_text.any?(/t/) { |value| value >= 2 }
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_any? **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_any?  (Integer/String) *******************'
-p(array.my_any? { |item| item.is_a? Integer })
-p(array.my_any? { |item| item.is_a? String })
-puts '**************** words.my_any?  (Integer/String) *******************'
-p(words.my_any? { |item| item.is_a? Integer })
-p(words.my_any? { |item| item.is_a? String })
+puts '==========================this is my_none? method'
+p(%w[ant bear cat].my_none? { |word| word.length == 5 })
+p(%w[ant bear cat].my_none? { |word| word.length >= 4 })
+p(%w[ant bear cat].my_none?(/d/))
+p([1, 3.14, 42].my_none?(Float))
+p([].my_none?)
+p([nil].my_none?)
+p([nil, false].my_none?)
+p([nil, false, true].my_none?)
+# puts '==========================this is none? method'
+# p %w[ant bear cat].none? { |word| word.length == 5 }
+# p %w[ant bear cat].none? { |word| word.length >= 4 }
+# p %w[ant bear cat].none?(/d/)
+# p [1, 3.14, 42].none?(Float)
+# p [].none?
+# p [nil].none?
+# p [nil, false].none?
+# p [nil, false, true].none?
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_none? **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_none? (Integer/String) *******************'
-p(array.my_none? { |item| item.is_a? Integer })
-p(array.my_none? { |item| item.is_a? String })
-puts '**************** range.my_none?  (Integer/String) *******************'
-p(range.my_none? { |item| item.is_a? Integer })
-p(range.my_none? { |item| item.is_a? String })
-puts '**************** array_clone.my_none?  (Integer/String) *******************'
-p(array_clone.my_none? { |item| item.is_a? Integer })
-p(array_clone.my_none? { |item| item.is_a? String })
-puts '**************** words.my_none?  (Integer/String) *******************'
-p(words.my_none? { |item| item.is_a? Integer })
-p(words.my_none? { |item| item.is_a? String })
+puts '==========================this is my_map method'
+p(my_array.my_map { |value| value * 2 })
+p((1..4).my_map { |i| i * i })
+p(my_array.my_map(&arg))
+# puts '==========================this is map method'
+# p my_array.map { |value| value * 2 }
+# p (1..4).map { |i| i * i }
+# p my_array.map(&arg)
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_count? **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_count? *******************'
-p(array.my_count { |item| item < 4 })
-p array.my_count(5)
-p array.my_count
-puts '**************** range.my_count? *******************'
-p(range.my_count { |item| item < 4 })
-p range.my_count(5)
-p range.my_count
-puts '**************** array_clone.my_count? *******************'
-p(array_clone.my_count { |item| item < 4 })
-p array_clone.my_count(5)
-p array_clone.my_count
+puts '==========================this is my_count method'
+p(my_array.my_count)
+p(my_array.my_count(2))
+p(my_array.my_count { |x| (x % 2).zero? })
+p(my_array.my_count(2) { |value| value })
+p((1..10).my_count { |x| (x % 2).zero? })
+# puts '==========================this is count method'
+# p my_array.count
+# p my_array.count(2)
+# p my_array.count { |x| (x % 2).zero? }
+# p my_array.count(2) { |value| value }
+# p (1..10).count { |x| (x % 2).zero? }
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_map **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_map *******************'
-p(array.my_map { |item| item * 2 })
-puts '**************** hash.my_map *******************'
-p(hash.my_map { |item| item * 2 })
-puts '**************** numbers.my_map *******************'
-p(numbers.my_map { |item| item * 2 })
-puts '**************** words.my_map *******************'
-p(words.my_map { |item| item * 2 })
+puts '==========================this is my_inject method'
+p(my_array.my_inject { |value| value * 2 })
+p((5..10).my_inject { |sum, n| sum + n })
+p((5..10).my_inject(1, :*))
+p((5..10).my_inject(1) { |product, n| product * n })
+longest = %w[cat mouse sheep bear banana].my_inject do |memo, word|
+  memo.length > word.length ? memo : word
+end
+p longest
+p my_array
 
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: my_inject **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '**************** array.my_inject **********************'
-p(array.my_inject { |result, elem| result + elem })
-puts '**************** hash.my_inject **********************'
-p(hash.my_inject { |result, elem| result + elem })
-puts '**************** numbers.my_inject **********************'
-p(numbers.my_inject { |result, elem| result + elem })
-puts '**************** range.my_inject **********************'
-p(range.my_inject { |result, elem| result + elem })
-puts '**************** array_clone.my_inject **********************'
-p(array_clone.my_inject { |result, elem| result + elem })
-
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-puts '************** THIS IS METHOD: multiply_els **********************'
-puts '**************                                    **********************'
-puts '**************                                    **********************'
-p multiply_els((5..10))
+puts '==========================this is multiply_els method'
+p multiply_els((my_array))
