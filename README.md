@@ -20,9 +20,10 @@
 
 ## Live Demo
 
-[Live Demo Link](https://repl.it/@railonacosta/enumerablemethods#main.rb)
+[Live Demo Link](https://repl.it/@railonacosta/enumerablemethods#test.rb)
 
-## Authors
+
+## Author
 
 👤 **Railon Acosta**
 
