@@ -1,5 +1,4 @@
 module Enumerable
-  # 1. each
   def my_each
     return to_enum(:my_each) unless block_given?
 
@@ -9,7 +8,6 @@ module Enumerable
     self
   end
 
-  # 2. my_each_with_index
   def my_each_with_index
     return to_enum(:my_each) unless block_given?
 
@@ -19,7 +17,6 @@ module Enumerable
     self
   end
 
-  # 3. my_select
   def my_select
     return to_enum :my_select unless block_given?
 
@@ -38,7 +35,6 @@ module Enumerable
     end
   end
 
-  # 4. my_all?
   def my_all?(arg = nil)
     if arg.nil?
       if block_given?
@@ -66,7 +62,6 @@ module Enumerable
     true
   end
 
-  #  5. my_any?
   def my_any?(arg = nil)
     if arg.nil?
       if block_given?
@@ -94,7 +89,6 @@ module Enumerable
     false
   end
 
-  #  6. My_none
   def my_none?(arg = nil)
     if arg.nil?
       if block_given?
@@ -122,7 +116,6 @@ module Enumerable
     true
   end
 
-  # 7. my_count
   def my_count(arg = nil)
     ans = 0
     if block_given?
@@ -139,7 +132,6 @@ module Enumerable
     ans
   end
 
-  # #8.  my_map
   def my_map(arg = nil)
     return to_enum :my_map unless block_given?
 
@@ -160,7 +152,6 @@ module Enumerable
     return_arr
   end
 
-  # 9. inject
   def my_inject(*arg)
     raise LocalJumpError unless block_given? || !arg.empty?
 
@@ -176,7 +167,6 @@ module Enumerable
   end
 end
 
-# 10. multiply_els
 def multiply_els(array)
   array.my_inject { |product, elem| product * elem }
 end
