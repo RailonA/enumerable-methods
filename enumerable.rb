@@ -160,7 +160,6 @@ module Enumerable
     return_arr
   end
 
-
   # 9. inject
   def my_inject(*arg)
     raise LocalJumpError unless block_given? || !arg.empty?
