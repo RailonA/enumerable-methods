@@ -99,24 +99,24 @@ module Enumerable
     if arg.nil?
       if block_given?
         my_each do |item|
-          return true if yield(item)
+          return false if yield(item)
         end
       else
         my_each do |item|
-          return true if item
+          return false if item
         end
       end
     elsif arg.is_a?(Regexp)
       my_each do |item|
-        return true if item.match(arg)
+        return false if item.match(arg)
       end
     elsif arg.is_a?(Module)
       my_each do |item|
-        return true if item.is_a?(arg)
+        return false if item.is_a?(arg)
       end
     else
       my_each do |item|
-        return true if item == arg
+        return false if item == arg
       end
     end
     true
@@ -140,13 +140,26 @@ module Enumerable
   end
 
   # #8.  my_map
-  def my_map
-    new_array = []
-    return to_enum unless block_given?
+  def my_map(arg = nil)
+    return to_enum :my_map unless block_given?
 
-    my_each { |index| new_array << yield(index) }
-    new_array
+    return_arr = []
+    if block_given? && arg.is_a?(Proc)
+      my_each do |index|
+        return_arr.push(arg.call(index))
+      end
+    elsif !block_given? && arg.is_a?(Proc)
+      my_each do |index|
+        return_arr.push(arg.call(index))
+      end
+    else
+      my_each do |index|
+        return_arr.push(yield(index))
+      end
+    end
+    return_arr
   end
+
 
   # 9. inject
   def my_inject(*arg)
